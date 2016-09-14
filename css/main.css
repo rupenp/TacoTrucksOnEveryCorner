@@ -87,12 +87,13 @@ body ol li, body ul li {
 #nav li {
   float:left;
   display:inline;
-  margin-left:26px;
+  //margin-left:26px;
   padding:0;
   line-height:36px;
 }
 #nav li a {
   font-weight:normal;
+  cursor: pointer;
 }
 .doc-150 #main {
   margin-left:167px;
