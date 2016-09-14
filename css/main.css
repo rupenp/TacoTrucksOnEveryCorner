@@ -1,0 +1,185 @@
+@import url(//fonts.googleapis.com/css?family=Open+Sans:400,600&subset=latin&effect=smoothing);
+
+
+html {
+  height:100%;
+}
+html, body {
+  margin:0;
+  padding:0;
+  background-color: #fff;
+  color:#333;
+  font-family: 'Open Sans', arial, sans-serif;
+  font-size: 13px;
+}
+a, a:visited {
+  color: #1a489d;
+  text-decoration: none;
+}
+a:hover {
+  text-decoration: underline;
+}
+img {
+  border: 0;
+}
+img.logo {
+  padding-top: 10px;
+  float: left;
+}
+strong {
+  font-weight:600;
+}
+
+h1 {
+  font-weight: 600;
+  font-size:22px;
+  line-height:30px;
+  letter-spacing:-.02em;
+  margin: 0 0 10px 0;
+  padding: 0;
+}
+h2 {
+  font-weight:600;
+  font-size: 18px;
+  line-height:24px;
+  padding: 0;
+  margin: 0 0 10px 0;
+}
+h3 {
+  padding:0;
+  margin: 0;
+  font-weight:600;
+  font-size: 14px;
+  margin: 0 0 10px 0;
+}
+strong {
+  font-weight:600;
+}
+body ol, body ul {
+  padding-left:3em;
+}
+body ol li, body ul li {
+  line-height:1.4em;
+}
+#doc {
+  margin: 24px auto;
+  padding: 0 15px;
+  width: 870px;
+}
+#header {
+  background-color: #fff;
+  height:50px;
+}
+#header #lang-select {
+  font-family:sans-serif;
+  font-size:11px;
+  float:right;
+  margin-top:9px;
+}
+#nav {
+  float:left;
+  list-style:none;
+  margin:0;
+  padding:0;
+  color:#333;
+  font-weight:600;
+}
+#nav li {
+  float:left;
+  display:inline;
+  margin-left:26px;
+  padding:0;
+  line-height:36px;
+}
+#nav li a {
+  font-weight:normal;
+}
+.doc-150 #main {
+  margin-left:167px;
+}
+
+#data {
+  display: none;
+  width: 650px;
+  padding: 2px;
+}
+
+.data {
+  display: none;
+  margin-top: 35px;
+  margin-bottom: 10px;
+  width: 30px;
+  height: 20px;
+}
+
+#footer {
+  clear:both;
+  float:left;
+  display:inline;
+  width:100%;
+  border-top:1px solid #eee;
+  font-size:12px;
+  //margin-top:3em;
+  padding:1em 0;
+  color:#777;
+}
+#footer p {
+  padding:0 0 0.4em;
+}
+#footer h3 {
+  font-size:12px;
+  line-height:normal;
+  display:inline;
+}
+
+#map {
+  margin-bottom:.5em;
+  //width:530px;
+}
+#map h1 {
+  margin-bottom:.1em;
+}
+#map p {
+  font-size:1em;
+  color:#666;
+}
+
+#map span {
+  font-size:1.2em;
+  color:#666;
+}
+
+path {
+  fill: none;
+  stroke-linejoin: round;
+}
+
+.land {
+  fill: #ddd;
+}
+
+.states,
+.hexagons path {
+  stroke: #fff;
+}
+
+.legend-title {
+    font-weight: normal;
+    font: 14px sans-serif;
+}
+
+.legend {
+  font-size: 14px;
+}
+
+div.tooltip {   
+  position: absolute; 
+  font-weight: bold;          
+  text-align: center;           
+  padding: 4px;  
+  font: 11px sans-serif;
+  color: white;
+  border: 1px;      
+  border-radius: 4px;           
+  pointer-events: none;         
+}

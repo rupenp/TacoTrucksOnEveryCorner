@@ -1,0 +1,176 @@
+<html>
+  <head>
+    <link rel="stylesheet" type="text/css" href="css/main.css">
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js"></script>
+    <script src="//d3js.org/d3.v3.min.js"></script>
+    <script src="//d3js.org/queue.v1.min.js"></script>
+    <script src="//d3js.org/topojson.v1.min.js"></script>
+    <script src="js/hexbin.min.js"></script>
+    <link rel="icon" href="imgs/dancing-taco.gif" type="image/x-icon" />
+    <meta name="#TacoTruckOnEveryCorner" content="Taco Truck On Every Corner" />
+    <title>#DataScienceForTacos</title>
+    <script>
+
+      function toggletopnav(item) {
+        $anchorItem = $(item);
+        $li_parent = $anchorItem.parent();
+        $li_parent.siblings().each(function () {
+           var itemName = $(this).text();$(this).text("");
+           $(this).append('<a id="' + $(this)[0].getAttribute("id") + '_anchor" onclick="toggletopnav(this)" href="#">'+itemName+'</a>');
+           $('.' + $(this)[0].getAttribute("id").split("_")[0]).hide()
+        });
+        var name = $anchorItem.remove().text();
+        $li_parent.text(name);
+        $('.'+ $anchorItem[0].getAttribute("id").split("_")[0]).show();
+      }
+    </script>
+  </head>
+  <body>
+    <div id="doc">
+      <div id="header">
+          <!-- <img class="logo" src="imgs/taco-trucks-mx.gif" alt="credit: https://disqus.com/home/channel/gifs/discussion/channel-gifs/tacos/best/"> --> 
+        <ul id="nav">
+          <li id="mapping_tab">#TacoTruckOnEveryCorner</li>
+	      <li id="data_tab"><a id="data_tab_anchor" onclick="toggletopnav(this)" href="#" >Data</a></li>
+        </ul>   
+      </div>
+      <div id="mapdiv" class="mapping">
+        <h1 class="title">Map of taco trucks throughout United States</h1>
+        <span>More than 5,700 locations of taco trucks are shown. These are binned into hexagons, and the hexagon area encodes the number of stores that fall into each bin. Color encodes the median (Yelp) rating of those trucks in that area, with the worst rated (1.0) starting in black and the best are all the way to pink (5.0). 
+        </span></br></br>
+        <span ids="hexbinmap"></span>
+      </div>
+      <div id="datadiv" class="data">
+        <h2>Data</h2>
+      </div>
+      <div id="footer">
+          Mapped by data-hungry geniuses (<a href="https://twitter.com/RupenPaul" target="_blank">Rupen</a> and <a href="https://twitter.com/tripswithtires" target="_blank">Nathan</a>) at <a href="https://twitter.com/VT_DAC" target="_blank">Discover Analytics Center</a>.
+      </div>
+    </div>
+  </body>
+    <script>
+        var width = 960,
+            height = 500;
+
+        var ratings = {
+          1: "#000000", 1.25: "#252525", 1.5: "#525252" , 1.75: "#737373",
+          2: "#fee391", 2.25: "#fec44f", 2.5: "#fe9929", 2.75: "#ec7014",
+          3: "#ef3b2c", 3.25: "#cb181d", 3.5: "#a50f15", 3.75: "#67000d",
+          4: "#8c6bb1", 4.25: "#88419d", 4.5: "#4d9221", 4.75: "#1f78b4",
+          5: "#f0027f"
+        };
+
+        function truckcolor(median_rating){
+            if (median_rating in ratings) {
+                return ratings[median_rating];
+            }
+            else {
+                console.log("Unknown rating: " + median_rating);
+                return "#45ada8"
+            }
+        }
+
+        var div = d3.select("body").append("div")   
+          .attr("class", "tooltip")               
+          .style("opacity", 0);
+
+        var hexbin = d3.hexbin()
+            .size([width, height])
+            .radius(8);
+
+        var radius = d3.scale.sqrt()
+            .domain([1, 720])
+            .range([5, 20]);
+
+        var projection = d3.geo.albersUsa()
+            .scale(1000)
+            .translate([width / 2, height / 2]);
+
+        var path = d3.geo.path()
+            .projection(projection);
+
+        var svg = d3.select("body").append("svg")
+            .attr("width", width)
+            .attr("height", height);
+
+        queue()
+            .defer(d3.json, "data/us.json")
+            .defer(d3.json, "data/taco-trucks.usa.yelp.v5.unique.json")
+            .await(tacotrucks);
+            
+            
+        function tacotrucks(error, us, taco) {
+          if (error) throw error;
+
+          taco.trucks.forEach(function(d) {
+            var p = projection([d.location.longitude, d.location.latitude]);
+            d[0] = p[0], d[1] = p[1];
+            //d.rating = parseInt(d.rating);
+          });
+
+          svg.append("path")
+              .datum(topojson.feature(us, us.objects.land))
+              .attr("class", "land")
+              .attr("d", path);
+
+          svg.append("path")
+              .datum(topojson.mesh(us, us.objects.states, function(a, b) { return a !== b; }))
+              .attr("class", "states")
+              .attr("d", path);
+
+          svg.append("g")
+              .attr("class", "hexagons")
+            .selectAll("path")
+              .data(hexbin(taco.trucks).sort(function(a, b) { return b.length - a.length; }))
+            .enter().append("path")
+            .attr("d", function(d) { 
+                return hexbin.hexagon(radius(d.length)); })
+            .attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; })
+            .on("click", function(d) { 
+                console.log(d);
+            })
+            .on("mouseover", function(d) {
+                d3.select(this).transition().duration(300).style("opacity", 1);
+                div.transition().duration(300)
+               .style("opacity", 1)
+               div.text("Median Rating: " + d3.median(d, function(d) { return +d.rating; })  )
+               .style("background", truckcolor(d3.median(d, function(d) { return +d.rating; })))
+               .style("left", (d3.event.pageX) + "px")
+               .style("top", (d3.event.pageY -30) + "px");
+            })
+            .on("mouseout", function() {
+               d3.select(this)
+               .transition().duration(300)
+               .style("opacity", 0.8);
+               div.transition().duration(300)
+               .style("opacity", 0);
+            })
+            .style("fill", function(d) { 
+                var median_rating = d3.median(d, function(d) { return +d.rating; });
+                return truckcolor(median_rating); });
+
+            var legend = svg.selectAll("g.legend")
+              .data(Object.keys(ratings).sort())
+              .enter().append("g")
+              .attr("class", "legend");
+
+              var ls_w = 20, ls_h = 20;
+              
+              legend.append("rect")
+              .attr("x", 18)
+              .attr("y", function(d, i){ return height - (i*ls_h) - 2*ls_h;})
+              .attr("width", ls_w)
+              .attr("height", ls_h - 1)
+              .style("fill", function(d, i) { return truckcolor(d); })
+              .style("opacity", 0.8);
+
+              legend.append("text")
+              .attr("x", 45)
+              .attr("y", function(d, i){ return height - (i*ls_h) - ls_h - 5;})
+              .text(function(d, i){ return Object.keys(ratings).sort()[i]; }); 
+        }
+
+
+
+    </script>
+</html>
