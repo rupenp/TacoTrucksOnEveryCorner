@@ -176,8 +176,8 @@ path {
 div.tooltip {   
   position: absolute; 
   font-weight: bold;          
-  text-align: center;           
-  padding: 4px;  
+  /* text-align: center; */
+  padding: 4px 8px;
   font: 11px sans-serif;
   color: white;
   border: 1px;      
