@@ -188,3 +188,20 @@ div.tooltip {
 .hex {
   cursor: pointer;
 }
+
+.cardset:not(.current) {
+  display: none;
+}
+
+.card {
+  width: 50%;
+  float: left;
+}
+
+.back-button {
+  cursor: pointer;
+}
+
+.header-back-btn {
+  margin-bottom: 1em;
+}

@@ -25,7 +25,19 @@
         </span></br></br>
         <span ids="hexbinmap"></span>
       </div>
-      <svg id="map-svg"></svg>
+      <div id="map-card" class="cardset current">
+        <svg id="map-svg"></svg>
+      </div>
+      <div id="detail-card" class="cardset">
+        <div class="header-back-btn">
+          <a class="card-header-back-btn back-button">&lt; Back to national overview</a>
+        </div>
+        <div id="detail-map" class="card">Someone should put a map here</div>
+        <div id="detail-list" class="card">
+          <ul>
+          </ul>
+        </div>
+      </div>
       <div id="footer">
           Mapped by data-hungry geniuses (<a href="https://twitter.com/RupenPaul" target="_blank">Rupen</a> and <a href="https://twitter.com/tripswithtires" target="_blank">Nathan</a>) at <a href="https://twitter.com/VT_DAC" target="_blank">Discover Analytics Center</a>.
       </div>
@@ -112,6 +124,28 @@
             .attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; })
             .on("click", function(d) { 
                 console.log(d);
+                d3.select('#map-card').classed('current', false);
+                d3.select('#detail-card').classed('current', true);
+
+                var tacodiv = d3.select('#detail-list').select('ul').selectAll('li')
+                    .data(d)
+                    .enter()
+                  .append('li')
+                    .attr('class', 'taco-truck')
+                    .append('div');
+
+                tacodiv.append('img')
+                  .attr('src', function (d) {
+                    return d.image_url
+                  });
+                tacodiv.append('div').text(function (d) {
+                  return d.name + ' ' + d.review_count + ' reviews' + d.location.city + ', ' + d.location.state_code + ' "' + d.snippet_text + '"';
+                });
+                tacodiv.append('img')
+                  .attr('src', function (d) {
+                    return d.rating_img_url;
+                  });
+
             })
             .on("mouseover", function(d) {
                 d3.select(this).transition().duration(300).style("opacity", 1);
@@ -154,7 +188,12 @@
               .text(function(d, i){ return Object.keys(ratings).sort()[i]; }); 
         }
 
-
+        // Make back button work
+        d3.select('.back-button')
+          .on('click', function () {
+            d3.select('#map-card').classed('current', true);
+            d3.select('#detail-card').classed('current', false);
+          });
 
     </script>
 </html>
