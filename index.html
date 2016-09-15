@@ -136,16 +136,17 @@
                   setupLeaflet();
                 }
 
+                d3.select('#detail-list').select('ul').selectAll('li').remove();
+
                 var tacodata = d3.select('#detail-list').select('ul').selectAll('li')
                     .data(d);
-
-                tacodata.exit().remove();
 
                 var tacodiv = tacodata.enter()
                   .append('li')
                     .attr('class', 'taco-truck')
                     .append('div')
                     .attr('class', 'truck-div');
+
 
                 tacodiv.append('div')
                   .attr('class', 'truck-name')
@@ -173,7 +174,8 @@
                     .addTo(leafletMap);
 
                 leafletMap.fitBounds(markerGroup.getBounds(), {
-                  padding: [26, 26]
+                  padding: [26, 26],
+                  maxZoom: 12
                 });
 
             })
