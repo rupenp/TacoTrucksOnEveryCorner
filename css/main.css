@@ -242,3 +242,12 @@ div.tooltip {
 .truck-div.current {
   background-color: #eee;  
 }
+
+.list-header {
+  float: right;
+}
+
+.truck-review-count {
+  vertical-align: super;
+  margin-left: 5px;
+}
