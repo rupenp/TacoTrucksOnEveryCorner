@@ -6,18 +6,20 @@
     <script src="//d3js.org/queue.v1.min.js"></script>
     <script src="//d3js.org/topojson.v1.min.js"></script>
     <script src="js/hexbin.min.js"></script>
-    <link rel="icon" href="imgs/dancing-taco.gif" type="image/x-icon" />
+    <link rel="icon" href="img/dancing-taco.gif" type="image/x-icon" />
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.0-rc.3/dist/leaflet.css" />
+    <link rel="stylesheet" href="css/leaflet.extra-markers.min.css">
     <meta name="#TacoTrucksOnEveryCorner" content="Taco Trucks On Every Corner" />
     <title>#TacoTrucksOnEveryCorner</title>
   </head>
   <body>
     <div id="doc">
       <div id="header">
-          <!-- <img class="logo" src="imgs/taco-trucks-mx.gif" alt="credit: https://disqus.com/home/channel/gifs/discussion/channel-gifs/tacos/best/"> --> 
+          <!-- <img class="logo" src="img/taco-trucks-mx.gif" alt="credit: https://disqus.com/home/channel/gifs/discussion/channel-gifs/tacos/best/"> --> 
         <ul id="nav">
           <li id="mapping_tab">#TacoTrucksOnEveryCorner</li>
-          <li id="gitrepo"><a id="gitrepo_anchor" href="https://github.com/rupenp/TacoTrucksOnEveryCorner" target="_blank" ><img src="imgs/github-large.jpg" width="50px" alt="github-repo: TacoTrucksOnEveryCorner"></a></li>
+          <li id="gitrepo"><a id="gitrepo_anchor" href="https://github.com/rupenp/TacoTrucksOnEveryCorner" target="_blank" ><img src="img/github-large.jpg" width="50px" alt="github-repo: TacoTrucksOnEveryCorner"></a></li>
           <li id="tweet-btn" style="padding-top: 6px;"><a href="https://twitter.com/intent/tweet?button_hashtag=TacoTrucksOnEveryCorner" class="twitter-hashtag-button" data-text="Inspired by #TacoTrucksOnEveryCorner we made it easy 2 find yours #DataScienceOnEveryCorner" data-url="https://rupenp.github.io/TacoTrucksOnEveryCorner/" data-related="@tripswithtires,@RupenPaul" data-show-count="false">#TacoTrucksOnEveryCorner</a><script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
 </li>
         </ul>   
@@ -182,8 +184,16 @@
                     return '"' + d.snippet_text + '"';
                   });
 
+                var tacoIcon = L.ExtraMarkers.icon({
+                    markerColor: 'blue',
+                    shape: 'square',
+                    innerHTML: '<img src="img/taco_noun.svg" width="28" style="padding-top:4px"></img>'
+                  });
+
                 var markers = d.map(function (truck, i) {
-                  return L.marker([truck.location.latitude, truck.location.longitude])
+                  return L.marker([truck.location.latitude, truck.location.longitude], {
+                    icon: tacoIcon
+                  })
                     .on('mouseover', function () {
                       d3.select('#truck-' + i).classed('current', true);
                     })
@@ -196,7 +206,8 @@
                     })
                     .bindTooltip(truck.name, {
                       direction: 'top',
-                      opacity: 1.0
+                      opacity: 1.0,
+                      offset: [0, -35]
                     });
                 });
 
@@ -329,6 +340,7 @@
 
     </script>
     <script src="https://unpkg.com/leaflet@1.0.0-rc.3/dist/leaflet.js"></script>
+    <script src="js/leaflet.extra-markers.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha256-cCueBR6CsyA4/9szpPfrX3s49M9vUU5BgtiJj06wt/s=" crossorigin="anonymous"></script>
 
 </html>
