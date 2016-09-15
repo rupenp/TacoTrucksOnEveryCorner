@@ -184,3 +184,7 @@ div.tooltip {
   border-radius: 4px;           
   pointer-events: none;         
 }
+
+.hex {
+  cursor: pointer;
+}

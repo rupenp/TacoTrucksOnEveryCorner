@@ -106,6 +106,7 @@
             .selectAll("path")
               .data(hexbin(taco.trucks).sort(function(a, b) { return b.length - a.length; }))
             .enter().append("path")
+            .attr('class', 'hex')
             .attr("d", function(d) { 
                 return hexbin.hexagon(radius(d.length)); })
             .attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; })
@@ -137,9 +138,9 @@
               .enter().append("g")
               .attr("class", "legend");
 
-              var ls_w = 20, ls_h = 20;
-              
-              legend.append("rect")
+            var ls_w = 20, ls_h = 20;
+            
+            legend.append("rect")
               .attr("x", 18)
               .attr("y", function(d, i){ return height - (i*ls_h) - 2*ls_h;})
               .attr("width", ls_w)
@@ -147,7 +148,7 @@
               .style("fill", function(d, i) { return truckcolor(d); })
               .style("opacity", 0.8);
 
-              legend.append("text")
+            legend.append("text")
               .attr("x", 45)
               .attr("y", function(d, i){ return height - (i*ls_h) - ls_h - 5;})
               .text(function(d, i){ return Object.keys(ratings).sort()[i]; }); 
