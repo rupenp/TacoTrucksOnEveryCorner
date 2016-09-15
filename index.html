@@ -239,7 +239,7 @@
                html_text += "s"
            }
            
-           html_text += " around " + mostFreqCity + " area<br/>Median Rating: ";
+           html_text += " around " + mostFreqCity + "<br/>Median Rating: ";
            html_text += d3.median(d, function(d) { return +d.rating; });
            
            return html_text;
