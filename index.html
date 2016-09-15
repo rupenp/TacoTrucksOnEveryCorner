@@ -18,6 +18,8 @@
         <ul id="nav">
           <li id="mapping_tab">#TacoTrucksOnEveryCorner</li>
           <li id="gitrepo"><a id="gitrepo_anchor" href="https://github.com/rupenp/TacoTrucksOnEveryCorner" target="_blank" ><img src="imgs/github-large.jpg" width="50px" alt="github-repo: TacoTrucksOnEveryCorner"></a></li>
+          <li id="tweet-btn" style="padding-top: 6px;"><a href="https://twitter.com/intent/tweet?button_hashtag=TacoTrucksOnEveryCorner" class="twitter-hashtag-button" data-text="Inspired by #TacoTrucksOnEveryCorner we made it easy 2 find yours #DataScienceOnEveryCorner" data-url="https://rupenp.github.io/TacoTrucksOnEveryCorner/" data-related="@tripswithtires,@RupenPaul" data-show-count="false">#TacoTrucksOnEveryCorner</a><script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+</li>
         </ul>   
       </div>
       <div id="mapdiv" class="mapping">
@@ -221,7 +223,6 @@
               d3.select(this).transition().duration(300).style("opacity", 1);
               div.transition().duration(300)
                 .style("opacity", 1)
-              //div.html(d.length + " Taco Trucks<br/>Median Rating: " + d3.median(d, function(d) { return +d.rating; })  )
               div.html(tooltiptext(d))
                 .style("background", truckcolor(d3.median(d, function(d) { return +d.rating; })))
                 .style("left", (d3.event.pageX) + "px")
