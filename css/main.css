@@ -197,6 +197,7 @@ div.tooltip {
   width: 50%;
   float: left;
   height: 500px;
+  overflow-y: scroll;
 }
 
 .back-button {
