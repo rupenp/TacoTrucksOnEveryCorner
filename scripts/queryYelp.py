@@ -9,10 +9,10 @@ from yelp.client import Client
 from yelp.oauth1_authenticator import Oauth1Authenticator
 
 '''Get your auth keys: https://www.yelp.com/developers/manage_api_keys '''
-CONSUMER_KEY = "FNU9ojLPp0Qqi5yTraSqhA"
-CONSUMER_SECRET = "3FIKLVp6CRhYx6r0FtKy_lXRWHw"
-TOKEN = "IeOLgXSADR-IWIAIRaIKp6Dlnd6kQlhq"
-TOKEN_SECRET = "R0y_CrO43COv-i7J9WjFhCtV9eE"
+CONSUMER_KEY = ""
+CONSUMER_SECRET = ""
+TOKEN = ""
+TOKEN_SECRET = ""
 auth = Oauth1Authenticator(
           consumer_key=CONSUMER_KEY,
           consumer_secret=CONSUMER_SECRET,
