@@ -196,6 +196,7 @@ div.tooltip {
 .card {
   width: 50%;
   float: left;
+  height: 500px;
 }
 
 .back-button {
@@ -204,4 +205,8 @@ div.tooltip {
 
 .header-back-btn {
   margin-bottom: 1em;
+}
+
+#leaflet-div {
+  height: 100%;
 }

@@ -7,6 +7,7 @@
     <script src="//d3js.org/topojson.v1.min.js"></script>
     <script src="js/hexbin.min.js"></script>
     <link rel="icon" href="imgs/dancing-taco.gif" type="image/x-icon" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.0-rc.3/dist/leaflet.css" />
     <meta name="#TacoTrucksOnEveryCorner" content="Taco Trucks On Every Corner" />
     <title>#DataScienceForTacos</title>
   </head>
@@ -32,7 +33,9 @@
         <div class="header-back-btn">
           <a class="card-header-back-btn back-button">&lt; Back to national overview</a>
         </div>
-        <div id="detail-map" class="card">Someone should put a map here</div>
+        <div id="detail-map" class="card">
+          <div id="leaflet-div">Map</div>
+        </div>
         <div id="detail-list" class="card">
           <ul>
           </ul>
@@ -46,6 +49,8 @@
     <script>
         var width = 960,
             height = 500;
+
+        var leafletMap = null;
 
         var ratings = {
           1: "#000000", 1.25: "#252525", 1.5: "#525252" , 1.75: "#737373",
@@ -127,6 +132,10 @@
                 d3.select('#map-card').classed('current', false);
                 d3.select('#detail-card').classed('current', true);
 
+                if (!leafletMap) {
+                  setupLeaflet();
+                }
+
                 var tacodiv = d3.select('#detail-list').select('ul').selectAll('li')
                     .data(d)
                     .enter()
@@ -145,6 +154,15 @@
                   .attr('src', function (d) {
                     return d.rating_img_url;
                   });
+
+                var markers = d.map(function (truck) {
+                  return L.marker([truck.location.latitude, truck.location.longitude]);
+                });
+
+                var markerGroup = L.featureGroup(markers)
+                    .addTo(leafletMap);
+
+                leafletMap.fitBounds(markerGroup.getBounds());
 
             })
             .on("mouseover", function(d) {
@@ -195,5 +213,18 @@
             d3.select('#detail-card').classed('current', false);
           });
 
+      function setupLeaflet() {
+        leafletMap = L.map('leaflet-div').setView([51.505, -0.09], 13);
+
+        L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
+            attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery &copy; <a href="http://mapbox.com">Mapbox</a>',
+            maxZoom: 18,
+            id: 'mapbox.streets',
+            accessToken: 'pk.eyJ1IjoibndzZWxmIiwiYSI6ImNpZWs0ZnppcDAwNTFzZW0wbHN4YmQzczcifQ.6Du542ZoRXxnghqRHj9VGQ'
+        }).addTo(leafletMap);
+      }
+
     </script>
+     <script src="https://unpkg.com/leaflet@1.0.0-rc.3/dist/leaflet.js"></script>
+
 </html>
