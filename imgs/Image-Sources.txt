@@ -1,0 +1,6 @@
+github-large.jpg: https://github.com/logos
+taco-truck-green-400.png: 
+taco-truck-green-48.png:
+taco-truck-simple.jpg:  
+taco-trucks-mx.gif:
+dancing-taco.gif: http://pug-of-war.tumblr.com/post/91093404721/get-ready-for-some-mexican-food-today-is-taco
