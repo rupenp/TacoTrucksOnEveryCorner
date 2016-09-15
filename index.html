@@ -136,9 +136,12 @@
                   setupLeaflet();
                 }
 
-                var tacodiv = d3.select('#detail-list').select('ul').selectAll('li')
-                    .data(d)
-                    .enter()
+                var tacodata = d3.select('#detail-list').select('ul').selectAll('li')
+                    .data(d);
+
+                tacodata.exit().remove();
+
+                var tacodiv = tacodata.enter()
                   .append('li')
                     .attr('class', 'taco-truck')
                     .append('div');
