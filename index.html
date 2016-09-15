@@ -174,7 +174,8 @@
                     .addTo(leafletMap);
 
                 leafletMap.fitBounds(markerGroup.getBounds(), {
-                  padding: [26, 26]
+                  padding: [26, 26],
+                  maxZoom: 12
                 });
 
             })
