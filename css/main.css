@@ -238,3 +238,7 @@ div.tooltip {
 #leaflet-div {
   height: 100%;
 }
+
+.truck-div.current {
+  background-color: #eee;  
+}

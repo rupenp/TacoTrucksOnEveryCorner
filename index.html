@@ -145,7 +145,10 @@
                   .append('li')
                     .attr('class', 'taco-truck')
                     .append('div')
-                    .attr('class', 'truck-div');
+                    .attr('class', 'truck-div')
+                    .attr('id', function (d, i) {
+                      return 'truck-' + i;
+                    });
 
 
                 tacodiv.append('div')
@@ -166,8 +169,14 @@
                     return '"' + d.snippet_text + '"';
                   });
 
-                var markers = d.map(function (truck) {
-                  return L.marker([truck.location.latitude, truck.location.longitude]);
+                var markers = d.map(function (truck, i) {
+                  return L.marker([truck.location.latitude, truck.location.longitude])
+                    .on('mouseover', function () {
+                      d3.select('#truck-' + i).classed('current', true);
+                    })
+                    .on('mouseout', function () {
+                      d3.select('#truck-' + i).classed('current', false);
+                    });
                 });
 
                 var markerGroup = L.featureGroup(markers)
@@ -280,6 +289,7 @@
       }
 
     </script>
-     <script src="https://unpkg.com/leaflet@1.0.0-rc.3/dist/leaflet.js"></script>
+    <script src="https://unpkg.com/leaflet@1.0.0-rc.3/dist/leaflet.js"></script>
+
 
 </html>

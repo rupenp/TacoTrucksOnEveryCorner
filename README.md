@@ -7,5 +7,4 @@ We performed a search of more than 5,700 taco trucks via Yelp API. These are map
 Data Collection:
 ----------------
 Please refer to the [python script](https://github.com/rupenp/TacoTrucksOnEveryCorner/blob/master/scripts/queryYelp.py) on query Yelp API.
-The data file we use is in data folder.
 
