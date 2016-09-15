@@ -39,10 +39,11 @@
       </div>
       <div id="detail-card" class="cardset">
         <div class="header-back-btn">
-          <a class="card-header-back-btn back-button">&lt; Back to national overview</a>
+          <a class="card-header-back-btn back-button">&lt; Back to national overview</a><span class="list-header"></span>
         </div>
         <div id="detail-map" class="card">
           <div id="leaflet-div">Map</div>
+          <div>Tap map pins to scroll list</div>
         </div>
         <div id="detail-list" class="card">
           <ul>
@@ -146,6 +147,11 @@
 
                 d3.select('#detail-list').select('ul').selectAll('li').remove();
 
+                var cities = d.map(function(d) {
+                  return d.location.city + ', ' + d.location.state_code;
+                });
+                d3.select('.list-header').text(d.length + ' taco truck' + (d.length == 1 ? '' : 's') + ' around ' + mode(cities));
+
                 var tacodata = d3.select('#detail-list').select('ul').selectAll('li')
                     .data(d);
 
@@ -173,7 +179,7 @@
                 tacodiv.append('div')
                   .attr('class', 'truck-reviews')
                   .html(function (d) {
-                    return '<img src="' + d.rating_img_url + '"></img> <span class="truck-reviews">' + d.review_count + ' review' + (d.review_count == 1 ? '' : 's') + '</span>';
+                    return '<img src="' + d.rating_img_url + '"></img> <span class="truck-review-count">' + d.review_count + ' review' + (d.review_count == 1 ? '' : 's') + '</span>';
                   });
 
                 tacodiv.append('div')
