@@ -185,6 +185,32 @@ div.tooltip {
   pointer-events: none;         
 }
 
+#detail-list ul {
+  margin-top: 0;
+}
+
+#detail-list li {
+  list-style: none;
+}
+
+.truck-div {
+  padding: 10px 0;
+  border-bottom: 1px solid #666;
+  cursor: pointer;
+}
+
+.truck-div:hover {
+  background-color: #eee;
+}
+
+.truck-name {
+  display: inline-block;
+}
+
+#detail-list h3 {
+  float: left;
+  margin: 0 10px 5px 0;
+}
 
 .hex {
   cursor: pointer;

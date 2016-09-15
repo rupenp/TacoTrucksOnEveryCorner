@@ -144,18 +144,25 @@
                 var tacodiv = tacodata.enter()
                   .append('li')
                     .attr('class', 'taco-truck')
-                    .append('div');
+                    .append('div')
+                    .attr('class', 'truck-div');
 
-                tacodiv.append('img')
-                  .attr('src', function (d) {
-                    return d.image_url
+                tacodiv.append('div')
+                  .attr('class', 'truck-name')
+                  .html(function (d) {
+                    return '<h3>' + d.name + '</h3> <span class="truck-location">' + d.location.city + ', ' + d.location.state_code + '</span>';
                   });
-                tacodiv.append('div').text(function (d) {
-                  return d.name + ' ' + d.review_count + ' reviews' + d.location.city + ', ' + d.location.state_code + ' "' + d.snippet_text + '"';
-                });
-                tacodiv.append('img')
-                  .attr('src', function (d) {
-                    return d.rating_img_url;
+
+                tacodiv.append('div')
+                  .attr('class', 'truck-reviews')
+                  .html(function (d) {
+                    return '<img src="' + d.rating_img_url + '"></img> <span class="truck-reviews">' + d.review_count + ' review' + (d.review_count == 1 ? '' : 's') + '</span>';
+                  });
+
+                tacodiv.append('div')
+                  .attr('class', 'truck-review-snippet')
+                  .text(function (d) {
+                    return '"' + d.snippet_text + '"';
                   });
 
                 var markers = d.map(function (truck) {
