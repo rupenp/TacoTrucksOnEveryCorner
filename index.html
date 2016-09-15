@@ -25,6 +25,7 @@
         </span></br></br>
         <span ids="hexbinmap"></span>
       </div>
+      <svg id="map-svg"></svg>
       <div id="footer">
           Mapped by data-hungry geniuses (<a href="https://twitter.com/RupenPaul" target="_blank">Rupen</a> and <a href="https://twitter.com/tripswithtires" target="_blank">Nathan</a>) at <a href="https://twitter.com/VT_DAC" target="_blank">Discover Analytics Center</a>.
       </div>
@@ -71,7 +72,7 @@
         var path = d3.geo.path()
             .projection(projection);
 
-        var svg = d3.select("body").append("svg")
+        var svg = d3.select("svg#map-svg")
             .attr("width", width)
             .attr("height", height);
 
