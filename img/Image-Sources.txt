@@ -4,3 +4,4 @@ taco-truck-green-48.png:
 taco-truck-simple.jpg:  
 taco-trucks-mx.gif:
 dancing-taco.gif: http://pug-of-war.tumblr.com/post/91093404721/get-ready-for-some-mexican-food-today-is-taco
+noun_68929_cc.svg: Taco by Dan Hetteix from the Noun Project https://thenounproject.com/term/taco/68929/
