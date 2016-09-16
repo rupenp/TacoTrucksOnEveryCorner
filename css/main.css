@@ -220,6 +220,10 @@ div.tooltip {
   display: none;
 }
 
+.explainer:not(.current) {
+  display: none;
+}
+
 .card {
   width: 50%;
   float: left;

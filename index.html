@@ -32,8 +32,10 @@
       </div>
       <div id="mapdiv" class="mapping">
         <h1 class="title">Map of taco trucks throughout United States</h1>
-        <span>More than 5,700 locations of taco trucks are shown. These are binned into hexagons, and the hexagon area encodes the number of trucks that fall into each bin. Color encodes the median (Yelp) rating of those trucks in that area, with the worst rated (1.0) starting in black and the best are all the way to pink (5.0). 
-        </span></br></br>
+        <span class="explainer current" id="map-explainer">On September 1, 2016, Marco Gutierrez warned that there will be <a href="http://www.nytimes.com/2016/09/03/us/politics/taco-trucks-on-every-corner-trump-supporters-anti-immigration-warning.html?_r=0">a taco truck on every corner</a>, which stirred some controversy. Using the <a href="https://www.yelp.com/developers/documentation/v2/overview">Yelp API</a>, we gathered the locations of more than 5,700 taco trucks throughout the United States. We binned nearby trucks into hexagons. The size of each hexagon represents number of trucks in that area and the color represents the median Yelp rating. Click on a bin to check out the taco trucks in your area. 
+        </span>
+        <span class="explainer" id="detail-explainer">Click on a taco on the map to reveal that truck in the list. Hover over trucks in the list to show their map markers' tooltip. Each taco truck's name is a link which opens Yelp in a new tab.</span>
+        </br></br>
         <span ids="hexbinmap"></span>
       </div>
       <div id="map-card" class="cardset current">
@@ -143,6 +145,9 @@
                 d3.select('#map-card').classed('current', false);
                 d3.select('#detail-card').classed('current', true);
 
+                d3.select('#map-explainer').classed('current', false);
+                d3.select('#detail-explainer').classed('current', true);
+
                 if (!leafletMap) {
                   setupLeaflet();
                 }
@@ -221,7 +226,8 @@
                     .addTo(leafletMap);
 
                 leafletMap.fitBounds(markerGroup.getBounds(), {
-                  padding: [26, 26],
+                  paddingTopLeft: [15, 60],
+                  paddingBottomRight: [15, 15],
                   maxZoom: 12
                 });
 
@@ -291,6 +297,9 @@
           .on('click', function () {
             d3.select('#map-card').classed('current', true);
             d3.select('#detail-card').classed('current', false);
+
+            d3.select('#map-explainer').classed('current', true);
+            d3.select('#detail-explainer').classed('current', false);
         });
 
       function tooltiptext(d){
