@@ -1,7 +1,7 @@
 <html>
   <head>
     <link rel="stylesheet" type="text/css" href="css/main.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js"></script>
     <script src="//d3js.org/d3.v3.min.js"></script>
     <script src="//d3js.org/queue.v1.min.js"></script>
     <script src="//d3js.org/topojson.v1.min.js"></script>
@@ -60,7 +60,11 @@
             height = 500;
 
         var leafletMap = null;
-
+        
+        var rating_values = [1, 1.25, 1.5, 1.75, 2, 2.25,
+                             2.5, 2.75, 3, 3.25, 3.5, 3.75,
+                             4, 4.25, 4.5, 4.75, 5];
+		/*
         var ratings = {
           1: "#000000", 1.25: "#252525", 1.5: "#525252" , 1.75: "#737373",
           2: "#fee391", 2.25: "#fec44f", 2.5: "#fe9929", 2.75: "#ec7014",
@@ -68,6 +72,19 @@
           4: "#8c6bb1", 4.25: "#88419d", 4.5: "#4d9221", 4.75: "#1f78b4",
           5: "#f0027f"
         };
+        */
+        var color = d3.scale.linear()
+                      .domain([1, 5])
+                      .range(["#e5f5f9", "#2ca25f"])
+                      .interpolate(d3.interpolateLab);
+        
+        var ratings = {};
+    	for(var i = 0; i < rating_values.length; i++)
+	    {
+    		ratings[rating_values[i]] = color(rating_values[i]);
+    	}
+        
+       
 
         function truckcolor(median_rating){
             if (median_rating in ratings) {
