@@ -65,30 +65,56 @@
 
         var leafletMap = null;
         
-        var rating_values = [1, 1.25, 1.5, 1.75, 2, 2.25,
-                             2.5, 2.75, 3, 3.25, 3.5, 3.75,
-                             4, 4.25, 4.5, 4.75, 5];
-		/*
-        var ratings = {
-          1: "#000000", 1.25: "#252525", 1.5: "#525252" , 1.75: "#737373",
-          2: "#fee391", 2.25: "#fec44f", 2.5: "#fe9929", 2.75: "#ec7014",
-          3: "#ef3b2c", 3.25: "#cb181d", 3.5: "#a50f15", 3.75: "#67000d",
-          4: "#8c6bb1", 4.25: "#88419d", 4.5: "#4d9221", 4.75: "#1f78b4",
-          5: "#f0027f"
-        };
-        */
+        var rating_values = [
+          // 1,
+          // 1.25,
+          // 1.5,
+          // 1.75,
+          2,
+          2.25,
+          2.5,
+          2.75,
+          3,
+          3.25,
+          3.5,
+          3.75,
+          4,
+          4.25,
+          4.5,
+          4.75,
+          5
+        ];
+		
+        // var ratings = {
+        //   // 1: "rgb(158, 1, 66)",
+        //   // 1.25: "rgb(158, 1, 66)",
+        //   // 1.5: "rgb(213, 62, 79)",
+        //   // 1.75: "rgb(213, 62, 79)",
+        //   2: "rgb(158, 1, 66)",
+        //   2.25: "rgb(158, 1, 66)",
+        //   2.5: "rgb(213, 62, 79)",
+        //   2.75: "rgb(213, 62, 79)",
+        //   3: "rgb(244, 109, 67)",
+        //   3.25: "rgb(253, 174, 97)",
+        //   3.5: "rgb(254, 224, 139)",
+        //   3.75: "rgb(255, 255, 191)",
+        //   4: "rgb(230, 245, 152)",
+        //   4.25: "rgb(171, 221, 164)",
+        //   4.5: "rgb(102, 194, 165)",
+        //   4.75: "rgb(50, 136, 189)",
+        //   5: "rgb(94, 79, 162)",
+        // };
+                
         var color = d3.scale.linear()
-                      .domain([1, 5])
-                      .range(["#e5f5f9", "#2ca25f"])
-                      .interpolate(d3.interpolateLab);
-        
+                             .domain([0, rating_values.length])
+                             .range(["rgb(254, 224, 139)", "rgb(94, 79, 162)"])
+                             .interpolate(d3.interpolateHsl);
+
         var ratings = {};
-    	for(var i = 0; i < rating_values.length; i++)
-	    {
-    		ratings[rating_values[i]] = color(rating_values[i]);
-    	}
-        
-       
+      	for(var i = 0; i < rating_values.length; i++)
+  	    {
+      		ratings[rating_values[i]] = color(i);
+      	}
 
         function truckcolor(median_rating){
             if (median_rating in ratings) {
