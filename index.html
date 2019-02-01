@@ -25,7 +25,7 @@
           <!-- <img class="logo" src="img/taco-trucks-mx.gif" alt="credit: https://disqus.com/home/channel/gifs/discussion/channel-gifs/tacos/best/"> --> 
         <ul id="nav">
           <li id="mapping_tab">#TacoTrucksOnEveryCorner</li>
-          <li id="gitrepo"><a id="gitrepo_anchor" href="https://github.com/rupenp/TacoTrucksOnEveryCorner" target="_blank" ><img src="img/github-large.jpg" width="50px" alt="github-repo: TacoTrucksOnEveryCorner"></a></li>
+          <li id="gitrepo"><a id="gitrepo_anchor" href="https://github.com/rupenp/TacoTrucksOnEveryCorner" rel="noopener" target="_blank" ><img src="img/github-large.jpg" width="50px" alt="github-repo: TacoTrucksOnEveryCorner"></a></li>
           <li id="tweet-btn" style="padding-top: 6px;"><a href="https://twitter.com/intent/tweet?button_hashtag=TacoTrucksOnEveryCorner" class="twitter-hashtag-button" data-text="Inspired by #TacoTrucksOnEveryCorner we made it easy 2 find yours #DataScienceOnEveryCorner" data-url="https://rupenp.github.io/TacoTrucksOnEveryCorner/" data-related="@tripswithtires,@RupenPaul" data-show-count="false"></a><script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
 </li>
         </ul>   
@@ -55,7 +55,7 @@
         </div>
       </div>
       <div id="footer">
-          Mapped by data-hungry analysts (<a href="https://twitter.com/RupenPaul" target="_blank">Rupen</a> and <a href="" target="_blank">Nathan</a>) at <a href="https://twitter.com/VT_DAC" target="_blank">Discovery Analytics Center</a>.
+          Mapped by data-hungry analysts (<a href="https://twitter.com/RupenPaul" rel="noopener" target="_blank">Rupen</a>, <a href="https://github.com/subhodipbiswas" rel="noopener" target="_blank">Subhodip</a>, and <a href="https://dac.cs.vt.edu" rel="noopener" target="_blank">Nathan</a>) at <a href="https://twitter.com/VT_DAC" rel="noopener" target="_blank">Discovery Analytics Center</a>.
       </div>
     </div>
   </body>
@@ -240,7 +240,7 @@
                 tacodiv.append('div')
                   .attr('class', 'truck-name')
                   .html(function (d) {
-                      return '<h3><a href="' + d.url + '" target="_blank">' + d.name + '</a></h3> <span class="truck-location">' + d.location.city + ', ' + d.location.state + '</span>';
+                      return '<h3><a href="' + d.url + '" rel="noopener" target="_blank">' + d.name + '</a></h3> <span class="truck-location">' + d.location.city + ', ' + d.location.state + '</span>';
                   });
 
                 tacodiv.append('div')
