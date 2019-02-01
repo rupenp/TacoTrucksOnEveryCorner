@@ -55,7 +55,7 @@
         </div>
       </div>
       <div id="footer">
-          Mapped by data-hungry geniuses (<a href="https://twitter.com/RupenPaul" target="_blank">Rupen</a> and <a href="https://twitter.com/tripswithtires" target="_blank">Nathan</a>) at <a href="https://twitter.com/VT_DAC" target="_blank">Discovery Analytics Center</a>.
+          Mapped by data-hungry analysts (<a href="https://twitter.com/RupenPaul" target="_blank">Rupen</a> and <a href="" target="_blank">Nathan</a>) at <a href="https://twitter.com/VT_DAC" target="_blank">Discovery Analytics Center</a>.
       </div>
     </div>
   </body>
@@ -84,6 +84,19 @@
           4.75,
           5
         ];
+
+
+        var rating_img_urls = {
+          1: "https://s3-media1.fl.yelpcdn.com/assets/2/www/img/f64056afac01/ico/stars/v1/stars_1.png",
+          1.5: "https://s3-media3.fl.yelpcdn.com/assets/2/www/img/11e62fee886f/ico/stars/v1/stars_1_half.png",
+          2: "https://s3-media2.fl.yelpcdn.com/assets/2/www/img/b561c24f8341/ico/stars/v1/stars_2.png",
+          2.5: "https://s3-media4.fl.yelpcdn.com/assets/2/www/img/c7fb9aff59f9/ico/stars/v1/stars_2_half.png",
+          3: "https://s3-media3.fl.yelpcdn.com/assets/2/www/img/34bc8086841c/ico/stars/v1/stars_3.png",
+          3.5: "https://s3-media1.fl.yelpcdn.com/assets/2/www/img/5ef3eb3cb162/ico/stars/v1/stars_3_half.png",
+          4: "https://s3-media4.fl.yelpcdn.com/assets/2/www/img/c2f3dd9799a5/ico/stars/v1/stars_4.png",
+          4.5: "https://s3-media2.fl.yelpcdn.com/assets/2/www/img/99493c12711e/ico/stars/v1/stars_4_half.png",
+          5: "https://s3-media1.fl.yelpcdn.com/assets/2/www/img/f1def11e4e79/ico/stars/v1/stars_5.png",
+        };
 		
         // var ratings = {
         //   // 1: "rgb(158, 1, 66)",
@@ -151,7 +164,8 @@
 
         queue()
             .defer(d3.json, "data/us.json")
-            .defer(d3.json, "data/taco-trucks.usa.yelp.v5.unique.json")
+            // .defer(d3.json, "data/taco-trucks.usa.yelp.v5.unique.json")
+            .defer(d3.json, "data/taco-trucks-2019-02.json")
             .await(tacotrucks);
             
             
@@ -159,7 +173,10 @@
           if (error) throw error;
 
           taco.trucks.forEach(function(d) {
-            var p = projection([d.location.longitude, d.location.latitude]);
+            var p = projection([d.coordinates.longitude, d.coordinates.latitude]);
+            if (p == null) {
+              debugger
+            }
             d[0] = p[0], d[1] = p[1];
             //d.rating = parseInt(d.rating);
           });
@@ -198,7 +215,7 @@
                 d3.select('#detail-list').select('ul').selectAll('li').remove();
 
                 var cities = d.map(function(d) {
-                  return d.location.city + ', ' + d.location.state_code;
+                  return d.location.city + ', ' + d.location.state;
                 });
                 d3.select('.list-header').text(d.length + ' taco truck' + (d.length == 1 ? '' : 's') + ' around ' + mode(cities));
 
@@ -223,13 +240,13 @@
                 tacodiv.append('div')
                   .attr('class', 'truck-name')
                   .html(function (d) {
-                      return '<h3><a href="' + d.url + '" target="_blank">' + d.name + '</a></h3> <span class="truck-location">' + d.location.city + ', ' + d.location.state_code + '</span>';
+                      return '<h3><a href="' + d.url + '" target="_blank">' + d.name + '</a></h3> <span class="truck-location">' + d.location.city + ', ' + d.location.state + '</span>';
                   });
 
                 tacodiv.append('div')
                   .attr('class', 'truck-reviews')
                   .html(function (d) {
-                    return '<img src="' + d.rating_img_url + '"></img> <span class="truck-review-count">' + d.review_count + ' review' + (d.review_count == 1 ? '' : 's') + '</span>';
+                    return '<img src="' + rating_img_urls[d.rating] + '"></img> <span class="truck-review-count">' + d.review_count + ' review' + (d.review_count == 1 ? '' : 's') + '</span>';
                   });
 
                 tacodiv.append('div')
@@ -245,7 +262,7 @@
                   });
 
                 var markers = d.map(function (truck, i) {
-                  return L.marker([truck.location.latitude, truck.location.longitude], {
+                  return L.marker([truck.coordinates.latitude, truck.coordinates.longitude], {
                     icon: tacoIcon
                   })
                     .on('mouseover', function () {
