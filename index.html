@@ -37,7 +37,6 @@
         </span>
         <span class="explainer" id="detail-explainer">Click on a taco on the map to reveal that truck in the list. Hover over trucks in the list to show their map markers' tooltip. Each taco truck's name is a link which opens Yelp in a new tab.</span>
         </br></br>
-        <span ids="hexbinmap"></span>
       </div>
       <div id="map-card" class="cardset current">
         <svg id="map-svg"></svg>
@@ -61,6 +60,7 @@
     </div>
   </body>
     <script>
+    var maths = {};
         var width = 960,
             height = 500;
 
@@ -166,7 +166,8 @@
         queue()
             .defer(d3.json, "data/us.json")
             // .defer(d3.json, "data/taco-trucks.usa.yelp.v5.unique.json")
-            .defer(d3.json, "data/taco-trucks-2019-02.json")
+            // .defer(d3.json, "data/taco-trucks-2019-02.json")
+            .defer(d3.json, "data/taco-trucks-2019-05.json")
             .await(tacotrucks);
             
             
@@ -176,9 +177,10 @@
           taco.trucks.forEach(function(d) {
             var p = projection([d.coordinates.longitude, d.coordinates.latitude]);
             if (p == null) {
-              debugger
+              console.error("p is null for", d);
+            } else {
+              d[0] = p[0], d[1] = p[1];
             }
-            d[0] = p[0], d[1] = p[1];
             //d.rating = parseInt(d.rating);
           });
 
@@ -199,6 +201,16 @@
             .enter().append("path")
             .attr('class', 'hex')
             .attr("d", function(d) { 
+              var cities = d.map(function(d) {
+                return d.location.city + ', ' + d.location.state;
+              });
+              var city = mode(cities);
+              if (city in maths) {
+                maths[city] += d.length;
+              } else {
+                maths[city] = d.length;
+              }
+
                 return hexbin.hexagon(radius(d.length)); })
             .attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; })
             .on("click", function(d) { 
@@ -363,7 +375,7 @@
             d3.select('#detail-explainer').classed('current', false);
         });
 
-      function tooltiptext(d){
+      function tooltiptext(d) {
            var numberOfTrucks = d.length;
            var medianRating = d3.median(d, function(d) { return +d.rating; });
            var cities = Array.from(d, function(d) {return d.location.city;});
